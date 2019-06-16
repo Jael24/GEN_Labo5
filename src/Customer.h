@@ -14,9 +14,9 @@ public:
     void addRental( const Rental& arg );
     std::string getName() const;
     std::string statement();
+    double calculateAmount();
 
 private:
-    double calculateAmount();
     std::string _name;
     std::vector< Rental > _rentals;
     int _frequentRenterPoints;
