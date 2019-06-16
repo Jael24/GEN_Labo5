@@ -32,6 +32,6 @@
 *.app
 
 # CLion
-.idea
-cmake-build-debug
+.idea/
+cmake-build-debug/
 CMakeLists.txt
