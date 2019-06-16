@@ -13,7 +13,7 @@ add_executable(GEN_Labo5
         src/Movie.h
         src/Movie.cpp
         src/Rental.h
-        Tests/CustomerTest.cpp)
+        Tests/CustomerTest.cpp src/Rental.cpp)
 
 add_subdirectory(lib/googletest-release-1.8.1)
 include_directories(lib/googletest-release-1.8.1/googletest/include)
