@@ -54,3 +54,16 @@ string Customer::statement()
            << " frequent renter points";
     return result.str();
 }
+
+Customer::Customer() {}
+
+Customer::Customer( const std::string& name )
+: _name( name ) {}
+
+void Customer::addRental( const Rental& arg ) {
+    _rentals.push_back( arg );
+}
+
+std::string Customer::getName() const {
+    return _name;
+}

@@ -19,17 +19,4 @@ private:
     std::vector< Rental > _rentals;
 };
 
-inline Customer::
-Customer() {}
-
-inline Customer::
-Customer( const std::string& name )
-        : _name( name ) {}
-
-inline void Customer::
-addRental( const Rental& arg ) { _rentals.push_back( arg ); }
-
-inline std::string Customer::
-getName() const { return _name; }
-
 #endif // CUSTOMER_H
