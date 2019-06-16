@@ -3,6 +3,7 @@
 #define CUSTOMER_H
 #include <string>
 #include <vector>
+#include <sstream>
 #include "Rental.h"
 
 class Customer {
@@ -15,8 +16,11 @@ public:
     std::string statement();
 
 private:
+    double calculateAmount();
     std::string _name;
     std::vector< Rental > _rentals;
+    int _frequentRenterPoints;
+    std::ostringstream _result;
 };
 
 #endif // CUSTOMER_H

@@ -1,5 +1,4 @@
 // Customer.cpp
-#include <sstream>
 #include <vector>
 #include "Customer.h"
 
@@ -11,54 +10,24 @@ using namespace std;
 string Customer::statement()
 {
     double totalAmount = 0;
-    int frequentRenterPoints = 0;
-    vector< Rental >::iterator iter = _rentals.begin();
-    vector< Rental >::iterator iter_end = _rentals.end();
-    ostringstream result;
-    result << "Rental Record for " << getName() << "\n";
-    for ( ; iter != iter_end; ++iter ) {
-        double thisAmount = 0;
-        Rental each = *iter;
+    _result << "Rental Record for " << getName() << "\n";
 
-        // determine amounts for each line
-        switch ( each.getMovie().getPriceCode()->getPriceCode() ) {
-            case State::REGULAR:
-                thisAmount += 2;
-                if ( each.getDaysRented() > 2 )
-                    thisAmount += ( each.getDaysRented() - 2 ) * 1.5 ;
-                break;
-            case State::NEW_RELEASE:
-                thisAmount += each.getDaysRented() * 3;
-                break;
-            case State::CHILDRENS:
-                thisAmount += 1.5;
-                if ( each.getDaysRented() > 3 )
-                    thisAmount += ( each.getDaysRented() - 3 ) * 1.5;
-                break;
-        }
+    totalAmount = calculateAmount();
 
-        // add frequent renter points
-        frequentRenterPoints++;
-        // add bonus for a two day new release rental
-        if ( ( each.getMovie().getPriceCode()->getPriceCode() == State::NEW_RELEASE )
-             && each.getDaysRented() > 1 ) frequentRenterPoints++;
 
-        // show figures for this rental
-        result << "\t" << each.getMovie().getTitle() << "\t"
-               << thisAmount << "\n";
-        totalAmount += thisAmount;
-    }
+
     // add footer lines
-    result << "Amount owed is " << totalAmount << "\n";
-    result << "You earned " << frequentRenterPoints
+    _result << "Amount owed is " << totalAmount << "\n";
+    _result << "You earned " << _frequentRenterPoints
            << " frequent renter points";
-    return result.str();
+    return _result.str();
 }
 
-Customer::Customer() {}
+Customer::Customer()
+: _frequentRenterPoints(0) {}
 
 Customer::Customer( const std::string& name )
-: _name( name ) {}
+: _name( name ), _frequentRenterPoints(0) {}
 
 void Customer::addRental( const Rental& arg ) {
     _rentals.push_back( arg );
@@ -66,4 +35,45 @@ void Customer::addRental( const Rental& arg ) {
 
 std::string Customer::getName() const {
     return _name;
+}
+
+double Customer::calculateAmount() {
+    double totalAmount = 0;
+
+    for (const auto &rental : _rentals) {
+        double thisAmount = 0;
+        // determine amounts for each line
+        switch ( rental.getMovie().getPriceCode()->getPriceCode() ) {
+            case State::REGULAR:
+                thisAmount += 2;
+                if ( rental.getDaysRented() > 2 )
+                    thisAmount += ( rental.getDaysRented() - 2 ) * 1.5 ;
+                break;
+            case State::NEW_RELEASE:
+                thisAmount += rental.getDaysRented() * 3;
+                break;
+            case State::CHILDRENS:
+                thisAmount += 1.5;
+                if ( rental.getDaysRented() > 3 )
+                    thisAmount += ( rental.getDaysRented() - 3 ) * 1.5;
+                break;
+            default:
+                break;
+        }
+
+        ++_frequentRenterPoints;
+
+        // add bonus for a two day new release rental
+        if ( ( rental.getMovie().getPriceCode()->getPriceCode() == State::NEW_RELEASE )
+             && rental.getDaysRented() > 1 ) {
+            ++_frequentRenterPoints;
+        }
+
+        // show figures for this rental
+        _result << "\t" << rental.getMovie().getTitle() << "\t"
+               << thisAmount << "\n";
+        totalAmount += thisAmount;
+    }
+
+    return totalAmount;
 }
