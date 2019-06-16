@@ -12,8 +12,8 @@ string Customer::statement()
     double totalAmount = 0;
     _result << "Rental Record for " << getName() << "\n";
 
+    _frequentRenterPoints = _rentals.size();
     totalAmount = calculateAmount();
-
 
 
     // add footer lines
@@ -51,6 +51,10 @@ double Customer::calculateAmount() {
                 break;
             case State::NEW_RELEASE:
                 thisAmount += rental.getDaysRented() * 3;
+
+                if (rental.getDaysRented() > 1) {
+                    ++_frequentRenterPoints;
+                }
                 break;
             case State::CHILDRENS:
                 thisAmount += 1.5;
@@ -59,14 +63,6 @@ double Customer::calculateAmount() {
                 break;
             default:
                 break;
-        }
-
-        ++_frequentRenterPoints;
-
-        // add bonus for a two day new release rental
-        if ( ( rental.getMovie().getPriceCode()->getPriceCode() == State::NEW_RELEASE )
-             && rental.getDaysRented() > 1 ) {
-            ++_frequentRenterPoints;
         }
 
         // show figures for this rental
