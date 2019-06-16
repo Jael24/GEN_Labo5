@@ -1,20 +1,28 @@
 #include "Movie.h"
 
-const int Movie::CHILDRENS;
-const int Movie::REGULAR;
-const int Movie::NEW_RELEASE;
+Movie::Movie( const std::string& title, State* priceCode )
+: _title( title ), _current(priceCode) {}
 
-Movie::Movie( const std::string& title, int priceCode )
-: _title( title ), _priceCode( priceCode ) {}
-
-int Movie::getPriceCode() const {
-    return _priceCode;
-}
-
-void Movie::setPriceCode( int arg ) {
-    _priceCode = arg;
+State* Movie::getPriceCode() const {
+    return _current;
 }
 
 std::string Movie::getTitle() const {
     return _title;
+}
+
+void Movie::setCurrent(State *s) {
+    _current = s;
+}
+
+void Movie::regular() {
+    _current->regular(this);
+}
+
+void Movie::childrens() {
+    _current->childrens(this);
+}
+
+void Movie::newRelease() {
+    _current->newRelease(this);
 }

@@ -2,20 +2,25 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 #include <string>
+#include "State.h"
+
+class State;
 
 class Movie {
 public:
-    static const int CHILDRENS   = 2;
-    static const int REGULAR     = 0;
-    static const int NEW_RELEASE = 1;
+    Movie( const std::string& title, State* priceCode );
 
-    Movie( const std::string& title, int priceCode = REGULAR );
-
-    int getPriceCode() const;
-    void setPriceCode( int arg );
+    State* getPriceCode() const;
     std::string getTitle() const;
 
+    void setCurrent(State *s);
+
+    void regular();
+    void childrens();
+    void newRelease();
+
 private:
+    class State *_current;
     std::string _title;
     int _priceCode;
 };
