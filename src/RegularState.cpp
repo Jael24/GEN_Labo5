@@ -15,3 +15,12 @@ void RegularState::childrens(Movie *m) {
 const int RegularState::getPriceCode() {
     return REGULAR;
 }
+
+double RegularState::calculatePrice(int daysRented) {
+    double result = 2.0;
+    if (daysRented > 2) {
+        result += (daysRented - 2) * 1.5;
+    }
+
+    return result;
+}

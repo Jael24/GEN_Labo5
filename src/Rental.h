@@ -10,6 +10,8 @@ public:
     int getDaysRented() const;
     const Movie& getMovie() const;
 
+    double calculatePrice() const;
+
 private:
     Movie _movie;
     int _daysRented;

@@ -15,7 +15,6 @@ string Customer::statement()
     _frequentRenterPoints = _rentals.size();
     totalAmount = calculateAmount();
 
-
     // add footer lines
     _result << "Amount owed is " << totalAmount << "\n";
     _result << "You earned " << _frequentRenterPoints
@@ -41,28 +40,11 @@ double Customer::calculateAmount() {
     double totalAmount = 0;
 
     for (const auto &rental : _rentals) {
-        double thisAmount = 0;
-        // determine amounts for each line
-        switch ( rental.getMovie().getPriceCode()->getPriceCode() ) {
-            case State::REGULAR:
-                thisAmount += 2;
-                if ( rental.getDaysRented() > 2 )
-                    thisAmount += ( rental.getDaysRented() - 2 ) * 1.5 ;
-                break;
-            case State::NEW_RELEASE:
-                thisAmount += rental.getDaysRented() * 3;
+        double thisAmount = rental.calculatePrice();
 
-                if (rental.getDaysRented() > 1) {
-                    ++_frequentRenterPoints;
-                }
-                break;
-            case State::CHILDRENS:
-                thisAmount += 1.5;
-                if ( rental.getDaysRented() > 3 )
-                    thisAmount += ( rental.getDaysRented() - 3 ) * 1.5;
-                break;
-            default:
-                break;
+        if (rental.getMovie().getPriceCode()->getPriceCode() == State::NEW_RELEASE
+            && rental.getDaysRented() > 1) {
+            ++_frequentRenterPoints;
         }
 
         // show figures for this rental

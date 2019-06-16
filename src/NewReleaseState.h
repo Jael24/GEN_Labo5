@@ -13,6 +13,7 @@ public:
     void regular(Movie *m);
     void childrens(Movie *m);
     const int getPriceCode();
+    double calculatePrice(int daysRented);
 };
 
 

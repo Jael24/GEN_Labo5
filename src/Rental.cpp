@@ -10,3 +10,7 @@ int Rental::getDaysRented() const {
 const Movie& Rental::getMovie() const {
     return _movie;
 }
+
+double Rental::calculatePrice() const {
+    return getMovie().getPriceCode()->calculatePrice(_daysRented);
+}

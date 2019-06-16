@@ -15,3 +15,7 @@ void NewReleaseState::childrens(Movie *m) {
 const int NewReleaseState::getPriceCode() {
     return NEW_RELEASE;
 }
+
+double NewReleaseState::calculatePrice(int daysRented) {
+    return daysRented * 3.0;
+}
