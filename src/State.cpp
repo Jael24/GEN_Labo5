@@ -19,3 +19,7 @@ void State::regular(Movie *movie) {
 const int State::getPriceCode() {
     return 0;
 }
+
+double State::calculatePrice(int daysRented) {
+    return 0;
+}

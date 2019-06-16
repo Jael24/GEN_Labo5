@@ -13,6 +13,7 @@ public:
     void regular(Movie *m);
     void newRelease(Movie *m);
     const int getPriceCode();
+    double calculatePrice(int daysRented);
 };
 
 

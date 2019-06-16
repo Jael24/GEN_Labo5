@@ -20,6 +20,7 @@ public:
     virtual void newRelease(Movie *movie);
     virtual void regular(Movie *movie);
     virtual const int getPriceCode();
+    virtual double calculatePrice(int daysRented);
 
 };
 
